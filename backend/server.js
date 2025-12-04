@@ -1,10 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
+const cors = require("cors");
 
 const todoRoutes = require("./routes/ToDoroutes");
-const userRoutes = require("./routes/UserRoutes"); // ADD THIS
-const cors = require("cors");
+const userRoutes = require("./routes/UserRoutes");
+const auth = require("./auth"); // <--- use your auth.js
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -18,10 +19,10 @@ mongoose
   .then(() => console.log("MongoDB connected...."))
   .catch((err) => console.log(err));
 
-// AUTH ROUTES (public)
-app.use("/api/auth", userRoutes); // <-- REQUIRED
+// PUBLIC AUTH ROUTES
+app.use("/api/auth", userRoutes);
 
-// TODO ROUTES (protected later)
-app.use("/api", todoRoutes);
+// PROTECTED TODO ROUTES (need valid JWT)
+app.use("/api", auth, todoRoutes);
 
 app.listen(PORT, () => console.log(`Listening at ${PORT}...`));
