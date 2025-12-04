@@ -1,70 +1,61 @@
-const getTodoModelForDate = require("../models/ToDoModel");
+const getTodayTodoModel = require("../models/ToDoModel");
 
-// return today as YYYY-MM-DD
-function todayStr() {
-  return new Date().toISOString().split("T")[0];
-}
-
-// GET all todos for selected date
+// GET all todos for today's session
 module.exports.getToDos = async (req, res) => {
   try {
-    const date = req.params.date || todayStr();
-    const ToDo = getTodoModelForDate(date);
-
-    const toDos = await ToDo.find().sort({ createdAt: 1 });
+    const ToDoModel = getTodayTodoModel();
+    const toDos = await ToDoModel.find();
     res.send(toDos);
   } catch (err) {
     console.log(err);
-    res.status(500).send("Error fetching todos");
+    res.status(500).send({ msg: "Error fetching todos", error: err });
   }
 };
 
-// POST - create todo
+// POST - create todo for today's session
 module.exports.saveToDo = async (req, res) => {
   try {
-    const date = req.params.date || todayStr();
     const { toDo } = req.body;
+    const ToDoModel = getTodayTodoModel();
 
-    const ToDo = getTodoModelForDate(date);
-
-    const data = await ToDo.create({ toDo });
+    const data = await ToDoModel.create({ toDo });
     console.log("Saved Successfully...");
     res.status(201).send(data);
   } catch (err) {
     console.log(err);
-    res.status(500).send("Error saving todo");
+    res.status(500).send({ msg: "Error saving todo", error: err });
   }
 };
 
-// PUT - update todo
+// PUT - update todo by id in today's session
 module.exports.updateToDo = async (req, res) => {
   try {
-    const date = req.params.date || todayStr();
     const { id } = req.params;
     const { toDo } = req.body;
+    const ToDoModel = getTodayTodoModel();
 
-    const ToDo = getTodoModelForDate(date);
-
-    await ToDo.findByIdAndUpdate(id, { toDo });
+    await ToDoModel.findByIdAndUpdate(id, { toDo });
     res.send("Updated Successfully...");
   } catch (err) {
     console.log(err);
-    res.status(500).send("Error updating todo");
+    res
+      .status(500)
+      .send({ error: err, msg: "Something went wrong while updating!" });
   }
 };
 
-// DELETE - remove todo
+// DELETE - remove todo by id in today's session
 module.exports.deleteToDo = async (req, res) => {
   try {
-    const date = req.params.date || todayStr();
     const { id } = req.params;
+    const ToDoModel = getTodayTodoModel();
 
-    const ToDo = getTodoModelForDate(date);
-
-    await ToDo.findByIdAndDelete(id);
+    await ToDoModel.findByIdAndDelete(id);
     res.send("Deleted Successfully...");
   } catch (err) {
     console.log(err);
-    res.status(500).send("Error deleting todo");
+    res
+      .status(500)
+      .send({ error: err, msg: "Something went wrong while deleting!" });
   }
 };

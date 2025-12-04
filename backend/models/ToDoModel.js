@@ -2,17 +2,23 @@ const mongoose = require("mongoose");
 
 const toDoSchema = new mongoose.Schema(
   {
-    toDo: { type: String, required: true },
+    toDo: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
 
-// factory function to return model for each date-based collection
-function getTodoModelForDate(dateStr) {
-  const safeDate = dateStr.replace(/-/g, "_");
-  const modelName = `ToDo_${safeDate}`;
+// Returns a Mongoose model for today's date-based collection
+function getTodayTodoModel() {
+  const today = new Date().toISOString().split("T")[0]; // 'YYYY-MM-DD'
+  const safeDate = today.replace(/-/g, "_"); // 'YYYY_MM_DD'
+
+  const modelName = `ToDO_${safeDate}`;
   const collectionName = `todo_${safeDate}`;
 
+  // Reuse model if already created
   if (mongoose.models[modelName]) {
     return mongoose.models[modelName];
   }
@@ -20,4 +26,4 @@ function getTodoModelForDate(dateStr) {
   return mongoose.model(modelName, toDoSchema, collectionName);
 }
 
-module.exports = getTodoModelForDate;
+module.exports = getTodayTodoModel;

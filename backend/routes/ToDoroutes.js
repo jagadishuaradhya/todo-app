@@ -8,10 +8,9 @@ const {
 
 const router = Router();
 
-// optional date parameter — defaults to today
-router.get("/get/:date?", getToDos);
-router.post("/save/:date?", saveToDo);
-router.put("/update/:id/:date?", updateToDo);
-router.delete("/delete/:id/:date?", deleteToDo);
+router.get("/get", getToDos);
+router.post("/save", saveToDo);
+router.put("/update/:id", updateToDo);
+router.delete("/delete/:id", deleteToDo);
 
 module.exports = router;

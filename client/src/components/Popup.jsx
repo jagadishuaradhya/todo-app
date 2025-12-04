@@ -8,9 +8,7 @@ const Popup = ({ setShowPopup, popupContent, setUpdateUI }) => {
 
   const updateToDo = () => {
     axios
-      .put(`${baseURL}/update/${popupContent.id}/${popupContent.date}`, {
-        toDo: input,
-      })
+      .put(`${baseURL}/update/${popupContent.id}`, { toDo: input })
       .then((res) => {
         console.log(res.data);
         setUpdateUI((prevState) => !prevState);
