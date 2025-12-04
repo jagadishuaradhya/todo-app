@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { RxCross1 } from "react-icons/rx";
+import { RxCross1 } from "react-icons/ry";
 import { baseURL } from "../utils/constant";
 
 const Popup = ({ setShowPopup, popupContent, setUpdateUI }) => {
@@ -8,7 +8,9 @@ const Popup = ({ setShowPopup, popupContent, setUpdateUI }) => {
 
   const updateToDo = () => {
     axios
-      .put(`${baseURL}/update/${popupContent.id}`, { toDo: input })
+      .put(`${baseURL}/update/${popupContent.id}/${popupContent.date}`, {
+        toDo: input,
+      })
       .then((res) => {
         console.log(res.data);
         setUpdateUI((prevState) => !prevState);

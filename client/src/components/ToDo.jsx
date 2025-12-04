@@ -1,4 +1,3 @@
-
 import axios from "axios";
 import React from "react";
 import { AiFillEdit } from "react-icons/ai";
@@ -6,15 +5,17 @@ import { RxCross1 } from "react-icons/rx";
 import { baseURL } from "../utils/constant";
 
 const ToDo = ({ text, id, setUpdateUI, setShowPopup, setPopupContent }) => {
+  const today = new Date().toISOString().split("T")[0];
+
   const deleteTodo = () => {
-    axios.delete(`${baseURL}/delete/${id}`).then((res) => {
+    axios.delete(`${baseURL}/delete/${id}/${today}`).then((res) => {
       console.log(res.data);
       setUpdateUI((prevState) => !prevState);
     });
   };
 
   const updateToDo = () => {
-    setPopupContent({ text, id });
+    setPopupContent({ text, id, date: today });
     setShowPopup(true);
   };
 
@@ -22,9 +23,16 @@ const ToDo = ({ text, id, setUpdateUI, setShowPopup, setPopupContent }) => {
     <div className="toDo">
       {text}
       <div className="icons">
-        <AiFillEdit className="icon" style={{ fontSize: '35px' }} onClick={updateToDo} />
-<RxCross1 className="icon" style={{ fontSize: '35px' }} onClick={deleteTodo} />
-
+        <AiFillEdit
+          className="icon"
+          style={{ fontSize: "35px" }}
+          onClick={updateToDo}
+        />
+        <RxCross1
+          className="icon"
+          style={{ fontSize: "35px" }}
+          onClick={deleteTodo}
+        />
       </div>
     </div>
   );
