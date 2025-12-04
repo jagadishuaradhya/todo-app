@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { baseURL } from "../utils/constant";
+import { useNavigate } from "react-router-dom";
 
-const Register = ({ navigate }) => {
+const Register = () => {
+  const nav = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,24 +14,43 @@ const Register = ({ navigate }) => {
       .post(`${baseURL}/auth/register`, { name, email, password })
       .then(() => {
         alert("Registered Successfully");
-        navigate("/login");
+        nav("/login");
       })
-      .catch(() => alert("Registration failed"));
+      .catch(() => alert("Registration Failed"));
   };
 
   return (
-    <div className="register-page">
-      <h2>Register</h2>
+    <div className="auth-container">
 
-      <input placeholder="Name" onChange={(e) => setName(e.target.value)} />
-      <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      <div className="auth-box">
+        <h1>Register</h1>
 
-      <button onClick={registerUser}>Register</button>
+        <input
+          placeholder="Full Name"
+          onChange={(e) => setName(e.target.value)}
+        />
+
+        <input
+          placeholder="Email"
+          type="email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <input
+          placeholder="Password"
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button onClick={registerUser}>Register</button>
+
+        <p>Already have an account?
+          <span className="auth-link" onClick={() => nav("/login")}>
+            Login
+          </span>
+        </p>
+      </div>
+
     </div>
   );
 };

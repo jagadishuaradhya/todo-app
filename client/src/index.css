@@ -264,3 +264,122 @@ button:active {
     width: 100%;
   }
 }
+.auth-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-box {
+  background: white;
+  padding: 30px;
+  width: 350px;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.auth-box input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.auth-box button {
+  padding: 12px;
+  background: #6c63ff;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.auth-link {
+  color: #6c63ff;
+  cursor: pointer;
+  margin-left: 5px;
+}
+/* Layout Main */
+.todo-layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(14px);
+  padding: 30px 20px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar-title {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.logout-btn {
+  margin-top: 20px;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background: #ff6b6b;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Main content */
+.todo-content {
+  flex: 1;
+  padding: 40px;
+}
+
+.todo-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+/* Input Area */
+.todo-input-area {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.todo-input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+}
+
+.add-btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #6c63ff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Todo List Items */
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

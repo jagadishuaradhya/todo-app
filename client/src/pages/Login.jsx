@@ -1,39 +1,50 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { baseURL } from "../utils/constant";
-import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-const Login = ({ navigate }) => {
+const Login = () => {
+  const nav = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useContext(AuthContext);
 
-  const handleLogin = () => {
+  const loginUser = () => {
     axios
       .post(`${baseURL}/auth/login`, { email, password })
-      .then(res => {
-        login(res.data.token);
-        navigate("/todo");
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        nav("/todo");
       })
-      .catch(() => alert("Invalid login"));
+      .catch(() => alert("Invalid Login"));
   };
 
   return (
-    <div className="login-page">
-      <h2>Login</h2>
+    <div className="auth-container">
 
-      <input
-        placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      <div className="auth-box">
+        <h1>Login</h1>
 
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <input
+          placeholder="Email"
+          type="email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      <button onClick={handleLogin}>Login</button>
+        <input
+          placeholder="Password"
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button onClick={loginUser}>Login</button>
+
+        <p>Don't have an account?
+          <span className="auth-link" onClick={() => nav("/register")}>
+            Register
+          </span>
+        </p>
+      </div>
+
     </div>
   );
 };
