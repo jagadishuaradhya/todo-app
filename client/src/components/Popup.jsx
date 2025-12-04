@@ -13,7 +13,8 @@ const Popup = ({ setShowPopup, popupContent, setUpdateUI }) => {
         console.log(res.data);
         setUpdateUI((prevState) => !prevState);
         setShowPopup(false);
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
