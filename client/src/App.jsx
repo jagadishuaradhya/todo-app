@@ -19,19 +19,17 @@ const App = () => {
   }, [updateUI]);
 
   const saveToDo = () => {
-  if (!input.trim()) {
-    return; // Don't save if input is empty
-  }
-  
-  axios
-    .post(`${baseURL}/save`, { toDo: input })
-    .then((res) => {
-      console.log(res.data);
-      setUpdateUI((prevState) => !prevState);
-      setInput("");
-    })
-    .catch((err) => console.log(err));
-};
+    if (!input.trim()) return;
+
+    axios
+      .post(`${baseURL}/save`, { toDo: input })
+      .then((res) => {
+        console.log(res.data);
+        setUpdateUI((prevState) => !prevState);
+        setInput("");
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <main>
@@ -61,6 +59,7 @@ const App = () => {
           ))}
         </div>
       </div>
+
       {showPopup && (
         <Popup
           setShowPopup={setShowPopup}
